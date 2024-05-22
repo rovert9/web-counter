@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Counter</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <p>This is a simple landing page hosted by Nginx on your server.</p>
+    <button id="get-status-button">Press me!</button>
+    <p>Button Press Count: <span id="count">0</span></p>
+    
+    <script>
+        // JavaScript code to handle the button click and status update
+        document.getElementById('get-status-button').addEventListener('click', () => {
+
+            // Sends GET request to the /pressed route to increment the value
+            fetch('/api/pressed', { method: 'GET' })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Request failed.');
+                })
+                .then(data => {
+                    // Updates the count display
+                    document.getElementById('count').textContent = data.count;
+                    // Logs the response for debugging
+                    console.log(data);
+                })
+                .catch(error => {
+                    // Logs the error if any
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+</body>
+</html> 
