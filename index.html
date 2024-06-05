@@ -15,6 +15,10 @@
 
             // Sends GET request to the /pressed route to increment the value
             fetch('/api/pressed', { method: 'GET' })
+
+            // Use this line if you are using a different host for the backend
+            // Adjust to your own address
+            //fetch('http://<my-host-name>/api/pressed', { method: 'GET' })
                 .then(response => {
                     if (response.ok) {
                         return response.json();

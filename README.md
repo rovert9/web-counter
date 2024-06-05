@@ -7,6 +7,11 @@ git clone https://github.com/jonatasbaldin/web-counter.git /home/ubuntu/app
 cd /home/ubuntu/app
 ```
 
+## Update APT cache
+```
+sudo apt-cache update
+```
+
 ## PostgreSQL
 Install PostgreSQL:
 ```
@@ -27,6 +32,12 @@ CREATE USER mary WITH PASSWORD '123456A!';
 # allows the user access to the databse
 GRANT ALL PRIVILEGES ON DATABASE countdb TO mary;
 
+# grants all privileges in the schema and table for the created used
+# required for PostgreSQL 15+
+\c countdb
+GRANT ALL PRIVILEGES ON SCHEMA public TO mary;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO mary;
+
 # exits the psql shell
 exit
 ```
@@ -34,7 +45,7 @@ exit
 ## Python
 Install the Python virtual environment package:
 ```
-sudo apt install python3.10-venv -y
+sudo apt install python3-venv -y
 ```
 
 Install the dependencies necessary to use the `psycopg2`, the package used to connect the Python application to the PostgreSQL database:
@@ -91,13 +102,14 @@ sudo systemctl status app
 ## Nginx
 Install Nginx:
 ```
-sudo apt install nginx
+sudo apt install nginx -y
 ```
 
 Add the following block in the `/etc/nginx/sites-enabled/default` file, at the end of the `server` block:
 ```
 location /api {
     proxy_pass http://127.0.0.1:5000;
+    add_header Access-Control-Allow-Origin "*";
 }
 ```
 
