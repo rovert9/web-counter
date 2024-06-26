@@ -9,7 +9,7 @@ cd /home/ubuntu/app
 
 ## Update APT cache
 ```
-sudo apt-cache update
+sudo apt-get update
 ```
 
 ## PostgreSQL
